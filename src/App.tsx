@@ -241,43 +241,42 @@ function StudioEditor({
       </div>
 
       <div className="studio-content">
-         {activeTab === 'crop' && (
-           <div className="crop-tab">
-              <div className="crop-presets" style={{display: 'flex', gap: 10, marginBottom: 16}}>
-                 <button className="secondary-btn" onClick={() => setCropPreset(1)}>1:1 (Square)</button>
-                 <button className="secondary-btn" onClick={() => setCropPreset(16/9)}>16:9 (Video)</button>
-                 <button className="secondary-btn" onClick={() => setCropPreset(9/16)}>9:16 (Story)</button>
-              </div>
-              <div className="crop-area" style={{maxHeight: '50vh', overflow: 'auto', background: 'var(--surface)', borderRadius: 12, padding: 12}}>
-                <ReactCrop
-                  crop={crop}
-                  onChange={(_, percentCrop) => setCrop(percentCrop)}
-                  onComplete={(c) => setCompletedCrop(c)}
-                >
-                  <img ref={imgRef} src={fileItem.previewUrl} onLoad={onImageLoad} alt="Crop preview" style={{maxHeight: '400px', width: 'auto'}} />
-                </ReactCrop>
-              </div>
-              <button className="primary-btn" style={{marginTop: 16, width: '100%'}} onClick={handleApplyCrop}>Terapkan & Simpan Crop</button>
-           </div>
-         )}
+            <div className="crop-tab">
+               <div className="crop-presets" style={{display: 'flex', gap: 8, marginBottom: 16, overflowX: 'auto', paddingBottom: 8, scrollbarWidth: 'none'}}>
+                  <button className="secondary-btn" style={{whiteSpace: 'nowrap'}} onClick={() => setCropPreset(1)}>1:1 Square</button>
+                  <button className="secondary-btn" style={{whiteSpace: 'nowrap'}} onClick={() => setCropPreset(16/9)}>16:9 Video</button>
+                  <button className="secondary-btn" style={{whiteSpace: 'nowrap'}} onClick={() => setCropPreset(9/16)}>9:16 Story</button>
+                  <button className="secondary-btn" style={{whiteSpace: 'nowrap'}} onClick={() => setCropPreset(4/5)}>4:5 Post</button>
+               </div>
+               <div className="crop-area" style={{maxHeight: '60vh', overflow: 'auto', background: 'var(--surface)', borderRadius: 16, padding: 12, border: '1px solid var(--glass-border)'}}>
+                 <ReactCrop
+                   crop={crop}
+                   onChange={(_, percentCrop) => setCrop(percentCrop)}
+                   onComplete={(c) => setCompletedCrop(c)}
+                 >
+                   <img ref={imgRef} src={fileItem.previewUrl} onLoad={onImageLoad} alt="Crop preview" style={{maxHeight: '400px', width: 'auto'}} />
+                 </ReactCrop>
+               </div>
+               <button className="primary-btn" style={{marginTop: 16, width: '100%', boxShadow: '0 10px 25px rgba(59, 130, 246, 0.2)'}} onClick={handleApplyCrop}>Terapkan & Simpan Hasil</button>
+            </div>
          
-         {activeTab === 'compare' && (
-           <div className="compare-tab">
-              <p style={{marginBottom: 16, color: 'var(--text-secondary)'}}>Geser untuk membandingkan foto asli dengan kualitas kompresi ekstrem (WEBP - Low).</p>
-              {compareUrl ? (
-                <div style={{height: 400, borderRadius: 12, overflow: 'hidden'}}>
-                  <ReactCompareSlider
-                    itemOne={<ReactCompareSliderImage src={fileItem.previewUrl} alt="Original" />}
-                    itemTwo={<ReactCompareSliderImage src={compareUrl} alt="Compressed" />}
-                  />
-                </div>
-              ) : (
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400}}>
-                   <RefreshCw className="spinning text-accent" size={32} />
-                </div>
-              )}
-           </div>
-         )}
+          {activeTab === 'compare' && (
+            <div className="compare-tab">
+               <p style={{marginBottom: 16, color: 'var(--text-secondary)', fontSize: '0.9rem'}}>Geser pemisah untuk membandingkan kualitas foto asli dan kompresi (WEBP Low).</p>
+               {compareUrl ? (
+                 <div style={{height: 'clamp(250px, 50vh, 400px)', borderRadius: 16, overflow: 'hidden', border: '1px solid var(--glass-border)'}}>
+                   <ReactCompareSlider
+                     itemOne={<ReactCompareSliderImage src={fileItem.previewUrl} alt="Original" />}
+                     itemTwo={<ReactCompareSliderImage src={compareUrl} alt="Compressed" />}
+                   />
+                 </div>
+               ) : (
+                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300}}>
+                    <RefreshCw className="spinning text-accent" size={32} />
+                 </div>
+               )}
+            </div>
+          )}
 
          {activeTab === 'bg' && (
            <div className="bg-tab" style={{textAlign: 'center', padding: '20px 0'}}>
@@ -324,7 +323,9 @@ function TopNavigation({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
     <>
       <nav className="top-nav animate-fade-in">
         <Link to="/" className="nav-logo">
-          <img src="https://cdn-berjuang.ghasali.id/wp-content/uploads/2026/03/sotoconvert_Soto-Converter-Logo.webp" alt="Logo" style={{ width: 32, height: 32, borderRadius: 8 }} />
+          <div className="logo-container" style={{ width: 32, height: 32, borderRadius: 8, boxShadow: 'none' }}>
+            <img src="https://cdn-berjuang.ghasali.id/wp-content/uploads/2026/03/sotoconvert_Soto-Converter-Logo.webp" alt="Logo" style={{ width: '100%', height: '100%', borderRadius: 8 }} />
+          </div>
           <span>Soto <span className="gradient-text">Converter</span></span>
         </Link>
         
@@ -370,19 +371,21 @@ function TopNavigation({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-nav-overlay ${isMenuOpen ? 'open' : ''}`}>
-        <Link to="/" className="mobile-link">Beranda</Link>
-        <div className="mobile-link">Alat Populer</div>
-        <div className="mobile-submenu">
-           <Link to="/heic-to-jpg" className="mobile-sublink">HEIC ke JPG</Link>
-           <Link to="/png-to-avif" className="mobile-sublink">PNG ke AVIF</Link>
-           <Link to="/jpg-to-webp" className="mobile-sublink">JPG ke WEBP</Link>
+        <div className="mobile-nav-content" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <Link to="/" className="mobile-link"><span>Beranda</span> <ChevronRight size={18} opacity={0.5} /></Link>
+          <div className="mobile-link"><span>Alat Populer</span> <ChevronDown size={18} opacity={0.5} /></div>
+          <div className="mobile-submenu">
+             <Link to="/heic-to-jpg" className="mobile-sublink">HEIC ke JPG</Link>
+             <Link to="/png-to-avif" className="mobile-sublink">PNG ke AVIF</Link>
+             <Link to="/jpg-to-webp" className="mobile-sublink">JPG ke WEBP</Link>
+          </div>
+          <Link to="/privacy-policy" className="mobile-link"><span>Privasi</span> <ChevronRight size={18} opacity={0.5} /></Link>
+          <Link to="/terms-of-use" className="mobile-link"><span>Ketentuan</span> <ChevronRight size={18} opacity={0.5} /></Link>
+          <Link to="/wordpress-plugin" className="mobile-link" style={{ background: 'var(--primary-gradient)', color: 'white', marginTop: 8, boxShadow: 'var(--shadow-glow)' }}>
+              <span>Download Plugin WP</span>
+              <Gift size={20} />
+          </Link>
         </div>
-        <Link to="/privacy-policy" className="mobile-link">Privasi</Link>
-        <Link to="/terms-of-use" className="mobile-link">Ketentuan</Link>
-        <Link to="/wordpress-plugin" className="mobile-link" style={{ background: 'var(--primary-gradient)', color: 'white' }}>
-            <span>Download Plugin WP</span>
-            <Gift size={20} />
-        </Link>
       </div>
     </>
   );
@@ -511,45 +514,50 @@ function WordPressPlugin({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme
            </div>
          </header>
 
-         <div className="wp-feature-grid animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
-            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                    <ShieldCheck size={32} className="text-accent" />
+         <div className="wp-feature-grid animate-fade-in" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', 
+            gap: '20px', 
+            marginBottom: '40px' 
+         }}>
+            <div className="glass-panel" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '54px', height: '54px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <ShieldCheck size={28} className="text-accent" />
                 </div>
-                <h3 style={{ fontSize: '1.25rem' }}>Bebas Privasi</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Gambar diproses murni di sisi browser (Client-Side) sebelum dikirim ke database WordPress Anda. Tidak ada data yang keluar ke server pihak ketiga.</p>
+                <h3 style={{ fontSize: '1.2rem' }}>Bebas Privasi</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6' }}>Gambar diproses murni di sisi browser (Client-Side) sebelum dikirim ke database WordPress Anda. Tidak ada data yang keluar ke server pihak ketiga.</p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                    <Zap size={32} className="text-accent" />
+            <div className="glass-panel" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '54px', height: '54px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <Zap size={28} className="text-accent" />
                 </div>
-                <h3 style={{ fontSize: '1.25rem' }}>Otomatis WebP</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Setiap kali Anda mengunggah gambar ke Media WordPress, plugin akan otomatis mengubahnya menjadi format WebP modern yang jauh lebih ringan.</p>
+                <h3 style={{ fontSize: '1.2rem' }}>Otomatis WebP</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6' }}>Setiap kali Anda mengunggah gambar ke Media WordPress, plugin akan otomatis mengubahnya menjadi format WebP modern yang jauh lebih ringan.</p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                    <Gift size={32} className="text-accent" />
+            <div className="glass-panel" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '54px', height: '54px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <Gift size={28} className="text-accent" />
                 </div>
-                <h3 style={{ fontSize: '1.25rem' }}>100% Gratis Selamanya</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Nikmati fitur premium optimasi gambar tanpa biaya bulanan. Kami percaya pada keterbukaan dan performa web yang setara untuk semua.</p>
+                <h3 style={{ fontSize: '1.2rem' }}>100% Gratis Selamanya</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6' }}>Nikmati fitur premium optimasi gambar tanpa biaya bulanan. Kami percaya pada keterbukaan dan performa web yang setara untuk semua.</p>
             </div>
          </div>
 
-         <div className="glass-panel animate-fade-in" style={{ padding: '48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+         <div className="glass-panel animate-fade-in" style={{ padding: 'clamp(32px, 8vw, 48px)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'relative', zIndex: 2 }}>
-                <h2 style={{ fontSize: '2rem', marginBottom: '16px' }}>Siap Mempercepat WordPress Anda?</h2>
+                <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '16px' }}>Siap Mempercepat WordPress Anda?</h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', maxWidth: '600px', margin: '0 auto 32px' }}>Download plugin Soto WebP Converter sekarang dan rasakan perbedaan kecepatan loading situs Anda tanpa menguras bandwidth server.</p>
                 
-                <a href="https://cdn-berjuang.ghasali.id/wp-content/uploads/2026/03/soto-webp-converter.zip" className="primary-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '16px 40px', fontSize: '1.1rem', borderRadius: '40px' }} download>
-                    <Download size={22} /> Download Plugin WordPress (.zip)
+                <a href="https://cdn-berjuang.ghasali.id/wp-content/uploads/2026/03/soto-webp-converter.zip" className="primary-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '16px 40px', fontSize: '1.1rem', borderRadius: '40px', maxWidth: 'fit-content', margin: '0 auto' }} download>
+                    <Download size={22} /> Download (.zip)
                 </a>
                 
-                <p style={{ marginTop: '20px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Versi Terbaru - Kompatibel dengan WordPress 6.0+ & PHP 7.4+</p>
+                <p style={{ marginTop: '20px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>Versi Terbaru - Kompatibel dengan WordPress 6.0+ & PHP 7.4+</p>
             </div>
             
-            <div style={{ position: 'absolute', top: '-10%', right: '-5%', opacity: 0.05 }}>
+            <div className="rocket-bg-icon" style={{ position: 'absolute', top: '-10%', right: '-5%', opacity: 0.05 }}>
                 <Rocket size={300} />
             </div>
          </div>
@@ -1114,9 +1122,12 @@ function ConverterPage({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
         {/* Editor Modal Overlay */}
         {editingFile && (
            <div className="editor-modal-overlay animate-fade-in">
-              <div className="editor-modal-content">
+              <div className="editor-modal-content glass-panel" style={{ height: '100%', borderRadius: 'inherit' }}>
                  <div className="modal-header">
-                    <h3>Studio Editor: {editingFile.file.name}</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                      <h3 title={editingFile.file.name}>{editingFile.file.name}</h3>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Studio Editor</span>
+                    </div>
                     <button className="icon-btn remove-single" onClick={() => setEditingFile(null)}><X size={20} /></button>
                  </div>
                  <StudioEditor 
