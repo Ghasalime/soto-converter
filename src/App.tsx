@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 import { UploadCloud, Settings2, Download, RefreshCw, CheckCircle2, ChevronRight, Moon, Sun, X, Archive, Plus, ChevronDown, ShieldCheck, Zap, Menu, FileText, Lock, Scissors, Wand2, SlidersHorizontal, Gift, Rocket } from 'lucide-react';
 import JSZip from 'jszip';
 import { jsPDF } from 'jspdf';
@@ -1141,6 +1142,9 @@ function ConverterPage({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
            </div>
         )}
 
+        <ReloadPrompt />
+
+
         {/* SEO Navigation Section */}
         <section className="seo-links-container">
            <div style={{display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16}}>
@@ -1161,6 +1165,71 @@ function ConverterPage({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
 
       <AppFooter />
     </>
+  );
+}
+
+function ReloadPrompt() {
+  const {
+    offlineReady: [offlineReady, setOfflineReady],
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW({
+    onRegistered(r) {
+      console.log('SW Registered: ' + r);
+    },
+    onRegisterError(error) {
+      console.log('SW registration error', error);
+    },
+  });
+
+  const close = () => {
+    setOfflineReady(false);
+    setNeedRefresh(false);
+  };
+
+  if (!offlineReady && !needRefresh) return null;
+
+  return (
+    <div className="reload-prompt-overlay" style={{
+      position: 'fixed',
+      bottom: '24px',
+      right: '24px',
+      zIndex: 10000,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px',
+      padding: '24px',
+      borderRadius: '24px',
+      background: 'var(--surface)',
+      backdropFilter: 'blur(30px)',
+      border: '1px solid var(--accent-color)',
+      boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+      maxWidth: '350px',
+      animation: 'fadeIn 0.5s ease-out'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ background: 'var(--icon-bg)', padding: '10px', borderRadius: '12px' }}>
+          <RefreshCw className="text-accent spinning" size={24} />
+        </div>
+        <div>
+          <h4 style={{ margin: 0, fontSize: '1.05rem' }}>Update Tersedia!</h4>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            {needRefresh ? 'Versi terbaru sudah siap di-install.' : 'Aplikasi siap digunakan offline.'}
+          </p>
+        </div>
+      </div>
+      
+      <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
+        {needRefresh && (
+          <button className="primary-btn" style={{ padding: '10px 20px', fontSize: '0.9rem' }} onClick={() => updateServiceWorker(true)}>
+            Update Sekarang
+          </button>
+        )}
+        <button className="secondary-btn" style={{ padding: '10px 20px', fontSize: '0.9rem' }} onClick={() => close()}>
+          Tutup
+        </button>
+      </div>
+    </div>
   );
 }
 
