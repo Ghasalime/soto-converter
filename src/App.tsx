@@ -551,11 +551,11 @@ function WordPressPlugin({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme
                 <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '16px' }}>Siap Mempercepat WordPress Anda?</h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', maxWidth: '600px', margin: '0 auto 32px' }}>Download plugin Soto WebP Converter sekarang dan rasakan perbedaan kecepatan loading situs Anda tanpa menguras bandwidth server.</p>
                 
-                <a href="https://cdn-berjuang.ghasali.id/wp-content/uploads/2026/03/soto-webp-converter.zip" className="primary-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '16px 40px', fontSize: '1.1rem', borderRadius: '40px', maxWidth: 'fit-content', margin: '0 auto' }} download>
+                <a href="/updates/soto-webp-2.1.0.zip" className="primary-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '16px 40px', fontSize: '1.1rem', borderRadius: '40px', maxWidth: 'fit-content', margin: '0 auto' }} download>
                     <Download size={22} /> Download (.zip)
                 </a>
                 
-                <p style={{ marginTop: '20px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>Versi Terbaru - Kompatibel dengan WordPress 6.0+ & PHP 7.4+</p>
+                <p style={{ marginTop: '20px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>Versi Terbaru 2.1.0 - Kompatibel dengan WordPress 6.0+ & PHP 7.4+</p>
             </div>
             
             <div className="rocket-bg-icon" style={{ position: 'absolute', top: '-10%', right: '-5%', opacity: 0.05 }}>
