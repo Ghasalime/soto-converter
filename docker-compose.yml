@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sotoconverter:
+    build: .
+    container_name: soto-converter
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    # Use environment variables if needed for future features
+    environment:
+      - NODE_ENV=production
+    networks:
+      - cloudflare-tunnel
+
+networks:
+  cloudflare-tunnel:
+    # Set external to true if you already have a network for Cloudflare Tunnel
+    external: false
