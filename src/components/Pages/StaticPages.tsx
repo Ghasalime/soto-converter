@@ -1,5 +1,4 @@
-import React from 'react';
-import { ShieldCheck, Lock, Download, Rocket, Zap, CheckCircle2, ChevronRight, Menu } from 'lucide-react';
+import { ShieldCheck, Download, Rocket, Zap, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface PageProps {

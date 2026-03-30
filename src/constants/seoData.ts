@@ -1,4 +1,4 @@
-import { FileIcon, FileImage, FileText, FileVideo, Gift, Scissors, SlidersHorizontal, Type, Wand2, Zap } from 'lucide-react';
+import { FileIcon, FileImage, FileText, FileVideo, Gift, Rocket, Scissors, SlidersHorizontal, Type, Wand2, Zap } from 'lucide-react';
 
 export interface InternalLink {
   path: string;

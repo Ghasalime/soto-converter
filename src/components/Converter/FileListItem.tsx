@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, RefreshCw, CheckCircle2, Download, Scissors, Wand2, Maximize2 } from 'lucide-react';
+import { X, Download, Scissors } from 'lucide-react';
 
 export interface FileItem {
   id: string;
@@ -18,11 +18,10 @@ interface FileListItemProps {
   onRemove: (id: string) => void;
   onEdit: (item: FileItem) => void;
   isVectorizer: boolean;
-  isWatermarkTool: boolean;
 }
 
 export const FileListItem: React.FC<FileListItemProps> = ({
-  item, idx, formatBytes, onRemove, onEdit, isVectorizer, isWatermarkTool
+  item, idx: _idx, formatBytes, onRemove, onEdit, isVectorizer
 }) => {
   return (
     <div className={`file-item animate-fade-in ${item.status}`} style={{
@@ -30,11 +29,6 @@ export const FileListItem: React.FC<FileListItemProps> = ({
     }}>
       <div className="file-preview" style={{width: 48, height: 48, borderRadius: 8, overflow: 'hidden', flexShrink: 0, position: 'relative', background: 'var(--icon-bg)'}}>
         <img src={item.previewUrl} alt="preview" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-        {item.status === 'processing' && (
-          <div style={{position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <RefreshCw size={16} className="spinning text-white" />
-          </div>
-        )}
       </div>
       
       <div className="file-info" style={{flex: 1, minWidth: 0}}>

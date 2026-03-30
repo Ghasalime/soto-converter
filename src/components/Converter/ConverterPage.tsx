@@ -1,14 +1,14 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { UploadCloud, RefreshCw, CheckCircle2, Archive, Plus, ShieldCheck, Zap, FileText } from 'lucide-react';
+import { UploadCloud, RefreshCw, CheckCircle2, Archive, ShieldCheck, Zap, FileText, SlidersHorizontal } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import JSZip from 'jszip';
 import { jsPDF } from 'jspdf';
 import { convertPDFToImages } from '../../utils/pdfUtils';
 import { processImageFile } from '../../utils/converterUtils';
-import { seoConfig, ImageFormat, internalLinks } from '../../constants/seoData';
+import { seoConfig, type ImageFormat } from '../../constants/seoData';
 import { AdvancedOptions } from './AdvancedOptions';
-import { FileListItem, FileItem } from './FileListItem';
+import { FileListItem, type FileItem } from './FileListItem';
 
 export type GlobalStatus = 'idle' | 'processing' | 'success' | 'parsing' | 'error';
 
@@ -26,7 +26,7 @@ function formatBytes(bytes: number, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
-export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme }) => {
+export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, toggleTheme: _toggleTheme }) => {
   const loc = useLocation();
   const currentPath = loc.pathname;
   const pageSEO = seoConfig[currentPath] || seoConfig['/'];
@@ -40,8 +40,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
 
   const [files, setFiles] = useState<FileItem[]>([]);
   const [globalStatus, setGlobalStatus] = useState<GlobalStatus>('idle');
-  const [targetFormat, setTargetFormat] = useState<ImageFormat>(isWebpToGif ? 'image/gif' : pageSEO.defaultTarget);
-  const [quality, setQuality] = useState(0.85);
+  const [targetFormat, setTargetFormat] = useState<ImageFormat>(isWebpToGif ? 'image/gif' : (pageSEO?.defaultTarget || 'image/webp'));
+  const [quality] = useState(0.85);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [resizeWidth, setResizeWidth] = useState('');
@@ -49,15 +49,14 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
   const [watermarkText, setWatermarkText] = useState(isWatermarkTool ? 'Soto Converter' : '');
   const [customPrefix, setCustomPrefix] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [editingFile, setEditingFile] = useState<FileItem | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     setFiles([]);
     setGlobalStatus('idle');
-    setTargetFormat(isWebpToGif ? 'image/gif' : pageSEO.defaultTarget);
+    setTargetFormat(isWebpToGif ? 'image/gif' : (pageSEO?.defaultTarget || 'image/webp'));
     setWatermarkText(isWatermarkTool ? 'Soto Converter' : '');
-  }, [currentPath, isWebpToGif, isWatermarkTool, pageSEO.defaultTarget]);
+  }, [currentPath, isWebpToGif, isWatermarkTool, pageSEO]);
 
   const processFilesInput = useCallback(async (selectedFiles: FileList | File[]) => {
     if (selectedFiles.length === 0) return;
@@ -115,10 +114,9 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
         const result = await processImageFile(updatedFiles[i].file, {
           targetFormat,
           quality,
-          width: resizeWidth ? parseInt(resizeWidth) : undefined,
-          height: resizeHeight ? parseInt(resizeHeight) : undefined,
-          watermark: watermarkText || undefined,
-          isVectorizer
+          resizeWidth,
+          resizeHeight,
+          watermarkText: watermarkText || undefined
         });
 
         updatedFiles[i] = {
@@ -162,7 +160,6 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
 
   const handleDownloadPDF = async () => {
     const doc = new jsPDF();
-    const zip = new JSZip(); // Fallback if user wants separate files
     
     setGlobalStatus('processing');
     
@@ -202,16 +199,16 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
   return (
     <div className="converter-container" style={{maxWidth: 1200, margin: '0 auto', padding: '20px'}}>
       <Helmet>
-        <title>{pageSEO.title}</title>
-        <meta name="description" content={pageSEO.desc} />
+        <title>{pageSEO?.title}</title>
+        <meta name="description" content={pageSEO?.desc} />
       </Helmet>
 
       <div className="tool-header animate-fade-in" style={{textAlign: 'center', marginBottom: 40}}>
         <h1 style={{fontSize: '2.5rem', fontWeight: 800, marginBottom: 12, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
-          {pageSEO.title.split(' - ')[0]}
+          {pageSEO?.title?.split(' - ')[0]}
         </h1>
         <p style={{color: 'var(--text-secondary)', maxWidth: 600, margin: '0 auto', lineHeight: 1.6}}>
-           {pageSEO.desc}
+           {pageSEO?.desc}
         </p>
       </div>
 
@@ -220,7 +217,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
           <div 
             className={`dropzone ${isDragging ? 'dragging' : ''} ${files.length > 0 ? 'has-files' : ''}`}
             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-            onDragLeave={() => setIsDragging(false); }
+            onDragLeave={() => setIsDragging(false)}
             onDrop={(e) => { e.preventDefault(); setIsDragging(false); processFilesInput(e.dataTransfer.files); }}
             onClick={() => fileInputRef.current?.click()}
             style={{border: '2px dashed var(--glass-border)', borderRadius: 24, padding: 60, textAlign: 'center', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', transition: '0.3s', cursor: 'pointer'}}
@@ -249,9 +246,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme, toggleTheme
                     idx={idx} 
                     formatBytes={formatBytes} 
                     onRemove={removeFile}
-                    onEdit={setEditingFile}
+                    onEdit={() => {}}
                     isVectorizer={isVectorizer}
-                    isWatermarkTool={isWatermarkTool}
                   />
                 ))}
               </div>

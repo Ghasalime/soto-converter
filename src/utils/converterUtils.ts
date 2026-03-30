@@ -1,5 +1,4 @@
 import heic2any from 'heic2any';
-import { convertPDFToImages } from './pdfUtils';
 import gifshot from 'gifshot';
 import ImageTracer from 'imagetracerjs';
 
@@ -18,6 +17,15 @@ export async function processImageFile(
   options: ConversionOptions
 ): Promise<Blob> {
   const { targetFormat, quality, resizeWidth, resizeHeight, watermarkText } = options;
+
+  let sourceFile = file;
+  
+  // Handle HEIC/HEIF files
+  if (file instanceof File && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif'))) {
+    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.8 });
+    const convertedBlob = Array.isArray(blob) ? blob[0] : blob;
+    sourceFile = new File([convertedBlob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: 'image/jpeg' });
+  }
 
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -60,7 +68,7 @@ export async function processImageFile(
       }
 
       if (targetFormat === 'image/gif') {
-        // Create GIF from single image (animated GIF to WebP is separate)
+        // Create GIF from single image
         gifshot.createGIF({
           images: [img.src],
           interval: 0.1,
@@ -77,7 +85,8 @@ export async function processImageFile(
         return;
       }
 
-      if (targetFormat === 'image/jpeg' || targetFormat === 'image/bmp') {
+      const isNonAlpha = targetFormat === 'image/jpeg' || targetFormat === 'image/bmp';
+      if (isNonAlpha) {
           ctx.fillStyle = '#FFFFFF';
           ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
@@ -101,6 +110,6 @@ export async function processImageFile(
       }, targetFormat, quality);
     };
     img.onerror = () => reject(new Error("Failed to load image"));
-    img.src = typeof file === 'string' ? file : URL.createObjectURL(file);
+    img.src = typeof sourceFile === 'string' ? sourceFile : URL.createObjectURL(sourceFile);
   });
 }
