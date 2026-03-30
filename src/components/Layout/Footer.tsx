@@ -62,13 +62,13 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="footer-bottom">
-        <div className="nav-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 24 }}>
-          <div className="trust-badge-container" style={{ justifyContent: 'center', width: '100%', marginTop: 0, paddingTop: 0, borderTop: 'none' }}>
+        <div className="footer-bottom-container">
+          <div className="trust-badge-container">
             <div className="trust-badge"><Shield size={16} /> <span>100% Privat</span></div>
             <div className="trust-badge"><Lock size={16} /> <span>End-to-End Encryption</span></div>
             <div className="trust-badge"><CheckCircle size={16} /> <span>Open Source</span></div>
           </div>
-          <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+          <div className="copyright-text">
             © {currentYear} Soto Converter. Proudly made in 🇮🇩
           </div>
         </div>

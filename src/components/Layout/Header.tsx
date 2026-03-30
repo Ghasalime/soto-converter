@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <img 
               src={LOGO_URL} 
               alt="Soto Converter" 
-              style={{ width: 42, height: 42, borderRadius: 12, objectFit: 'cover' }} 
+              className="header-logo-img"
             />
             <div className="logo-text-stack">
               <span className="brand-name">Soto Converter</span>
@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             {categories.map(cat => (
               <div key={cat} className="nav-item-dropdown-premium">
                 <span className="nav-link-premium">
-                  {cat} <ChevronDown size={14} style={{ marginLeft: 4, opacity: 0.5 }} />
+                  {cat} <ChevronDown size={14} className="dropdown-chevron" />
                 </span>
                 <div className="dropdown-menu-premium">
                   <div className="dropdown-grid">
@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               </div>
             </div>
           ))}
-          <Link to="/wordpress-plugin" className="mobile-link-premium" style={{ background: 'var(--primary-gradient)', color: 'white' }} onClick={() => setIsMobileMenuOpen(false)}>
+          <Link to="/wordpress-plugin" className="mobile-link-premium cta-premium-mobile" onClick={() => setIsMobileMenuOpen(false)}>
             <Rocket size={20} /> WordPress Plugin
           </Link>
         </div>

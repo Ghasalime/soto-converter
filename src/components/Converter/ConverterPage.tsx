@@ -9,6 +9,7 @@ import { processImageFile } from '../../utils/converterUtils';
 import { seoConfig, type ImageFormat } from '../../constants/seoData';
 import { AdvancedOptions } from './AdvancedOptions';
 import { FileListItem, type FileItem } from './FileListItem';
+import { ImageEditorModal } from './ImageEditorModal';
 
 export type GlobalStatus = 'idle' | 'processing' | 'success' | 'parsing' | 'error';
 
@@ -50,6 +51,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
   const [customPrefix, setCustomPrefix] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [editingFile, setEditingFile] = useState<FileItem | null>(null);
 
   useEffect(() => {
     setFiles([]);
@@ -98,6 +100,17 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
       if (removed) URL.revokeObjectURL(removed.previewUrl);
       return filtered;
     });
+  };
+
+  const handleUpdateFile = (id: string, newFile: File, newPreviewUrl: string) => {
+    setFiles(prev => prev.map(f => {
+      if (f.id === id) {
+        URL.revokeObjectURL(f.previewUrl);
+        return { ...f, file: newFile, previewUrl: newPreviewUrl, status: 'idle' };
+      }
+      return f;
+    }));
+    setEditingFile(null);
   };
 
   const handleConvertAll = async () => {
@@ -197,22 +210,22 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
   };
 
   return (
-    <div className="converter-container" style={{maxWidth: 1200, margin: '0 auto', padding: '20px'}}>
+    <div className="converter-container">
       <Helmet>
         <title>{pageSEO?.title}</title>
         <meta name="description" content={pageSEO?.desc} />
       </Helmet>
 
-      <div className="tool-header animate-fade-in" style={{textAlign: 'center', marginBottom: 40}}>
-        <h1 style={{fontSize: '2.5rem', fontWeight: 800, marginBottom: 12, background: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+      <div className="app-header animate-fade-in">
+        <h1 className="gradient-text">
           {pageSEO?.title?.split(' - ')[0]}
         </h1>
-        <p style={{color: 'var(--text-secondary)', maxWidth: 600, margin: '0 auto', lineHeight: 1.6}}>
+        <p>
            {pageSEO?.desc}
         </p>
       </div>
 
-      <div className="converter-grid" style={{display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 350px', gap: 32}}>
+      <div className="converter-grid">
         <div className="main-workarea">
           <div 
             className={`dropzone ${isDragging ? 'dragging' : ''} ${files.length > 0 ? 'has-files' : ''}`}
@@ -220,25 +233,26 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
             onDragLeave={() => setIsDragging(false)}
             onDrop={(e) => { e.preventDefault(); setIsDragging(false); processFilesInput(e.dataTransfer.files); }}
             onClick={() => fileInputRef.current?.click()}
-            style={{border: '2px dashed var(--glass-border)', borderRadius: 24, padding: 60, textAlign: 'center', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', transition: '0.3s', cursor: 'pointer'}}
           >
             <input type="file" ref={fileInputRef} onChange={(e) => e.target.files && processFilesInput(e.target.files)} multiple hidden accept={isPdfToImage ? '.pdf' : 'image/*,.heic'} />
             <div className="dropzone-content">
-              <UploadCloud size={64} className="text-accent" style={{marginBottom: 20, opacity: 0.8}} />
-              <h3 style={{fontSize: '1.2rem', fontWeight: 700, marginBottom: 8}}>
+              <div className="icon-pulse-container">
+                <UploadCloud size={40} className="upload-icon" />
+              </div>
+              <h3>
                 {isPdfToImage ? 'Pilih atau Seret File PDF' : 'Seret & Lepas Gambar'}
               </h3>
-              <p style={{color: 'var(--text-muted)', fontSize: '0.9rem'}}>Bersifat batch (bisa banyak sekaligus) & 100% Client-side</p>
+              <p>Bersifat batch (bisa banyak sekaligus) & 100% Client-side</p>
             </div>
           </div>
 
           {files.length > 0 && (
-            <div className="file-list-section animate-fade-in" style={{marginTop: 32}}>
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16}}>
+            <div className="file-list-section animate-fade-in">
+              <div className="list-header">
                 <h4 style={{fontWeight: 700}}>Antrean File ({files.length})</h4>
-                <button className="text-btn" onClick={() => setFiles([])} style={{fontSize: '0.8rem', color: 'var(--danger)', fontWeight: 600}}>Hapus Semua</button>
+                <button className="clear-btn" onClick={() => setFiles([])}>Hapus Semua</button>
               </div>
-              <div className="file-items-grid" style={{display: 'flex', flexDirection: 'column', gap: 12}}>
+              <div className="file-items-grid">
                 {files.map((file, idx) => (
                   <FileListItem 
                     key={file.id} 
@@ -246,7 +260,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
                     idx={idx} 
                     formatBytes={formatBytes} 
                     onRemove={removeFile}
-                    onEdit={() => {}}
+                    onEdit={(item) => setEditingFile(item)}
                     isVectorizer={isVectorizer}
                   />
                 ))}
@@ -255,26 +269,26 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
           )}
         </div>
 
-        <aside className="options-sidebar" style={{position: 'sticky', top: 100, height: 'fit-content'}}>
-          <div className="sidebar-card" style={{background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', borderRadius: 24, padding: 24, border: '1px solid var(--glass-border)'}}>
-            <h4 style={{fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8}}>
+        <aside className="options-sidebar sticky-sidebar">
+          <div className="sidebar-card control-group">
+            <h4 className="sidebar-title">
               <SlidersHorizontal size={20} className="text-accent" /> Control Panel
             </h4>
             
             {!isVectorizer && !isWebpToGif && (
-              <div className="control-group" style={{marginBottom: 20}}>
-                <label style={{display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 8, fontWeight: 600}}>Format Output</label>
-                <select 
-                  className="custom-select" 
-                  value={targetFormat} 
-                  onChange={(e) => setTargetFormat(e.target.value as ImageFormat)}
-                  style={{width: '100%', padding: '12px', borderRadius: 12, border: '1px solid var(--glass-border)', background: 'var(--surface)', color: 'var(--text-primary)', outline: 'none', cursor: 'pointer'}}
-                >
-                  <option value="image/webp">WEBP (Rekomendasi)</option>
-                  <option value="image/png">PNG (Lossless)</option>
-                  <option value="image/jpeg">JPG (Kualitas Foto)</option>
-                  <option value="image/avif">AVIF (Next-Gen)</option>
-                </select>
+              <div className="input-group">
+                <label>Format Output</label>
+                <div className="custom-select">
+                  <select 
+                    value={targetFormat} 
+                    onChange={(e) => setTargetFormat(e.target.value as ImageFormat)}
+                  >
+                    <option value="image/webp">WEBP (Rekomendasi)</option>
+                    <option value="image/png">PNG (Lossless)</option>
+                    <option value="image/jpeg">JPG (Kualitas Foto)</option>
+                    <option value="image/avif">AVIF (Next-Gen)</option>
+                  </select>
+                </div>
               </div>
             )}
 
@@ -292,7 +306,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
               globalStatus={globalStatus}
             />
 
-            <div className="action-section" style={{marginTop: 24}}>
+            <div className="action-section">
               {globalStatus === 'idle' || globalStatus === 'error' ? (
                 <button className="primary-btn" onClick={isImageToPdf ? handleDownloadPDF : handleConvertAll} style={{width: '100%'}}>
                   {isImageToPdf ? <FileText size={20} className="btn-icon" /> : <Zap size={20} className="btn-icon" />}
@@ -303,13 +317,13 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
                    isWatermarkTool ? 'Apply Watermark' : 'Convert Semua'}
                 </button>
               ) : globalStatus === 'processing' ? (
-                 <div className="processing-indicator" style={{textAlign: 'center', padding: '12px', background: 'var(--icon-bg)', borderRadius: 12}}>
-                    <RefreshCw size={24} className="spinning text-accent" style={{margin: '0 auto 8px'}} />
-                    <span style={{fontSize: '0.9rem', fontWeight: 600}}>Sedang Memproses...</span>
+                 <div className="processing-indicator">
+                    <RefreshCw size={24} className="spinning text-accent" />
+                    <span>Sedang Memproses...</span>
                  </div>
               ) : globalStatus === 'success' ? (
-                 <div className="success-actions animate-bounce-in" style={{display: 'flex', flexDirection: 'column', gap: 12}}>
-                    <div style={{display: 'flex', alignItems: 'center', gap: 8, color: 'var(--success)', fontWeight: 600, justifyContent: 'center', marginBottom: 8}}>
+                 <div className="success-actions animate-bounce-in">
+                    <div className="success-message">
                        <CheckCircle2 size={20} /> Konversi Selesai!
                     </div>
                     {!isImageToPdf && (
@@ -322,15 +336,23 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
               ) : null}
             </div>
 
-            <div className="security-badge" style={{marginTop: 24, padding: 12, borderRadius: 12, background: 'rgba(34, 197, 94, 0.1)', display: 'flex', alignItems: 'center', gap: 8}}>
+            <div className="security-badge">
               <ShieldCheck size={20} className="text-success" />
-              <span style={{fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.4}}>
+              <span>
                 <b>Privasi Terjamin:</b> Proses dilakukan 100% di browser Anda. Tidak ada data yang dikirim ke server.
               </span>
             </div>
           </div>
         </aside>
       </div>
+
+      {editingFile && (
+        <ImageEditorModal 
+          item={editingFile}
+          onClose={() => setEditingFile(null)}
+          onSave={(newFile, newPreviewUrl) => handleUpdateFile(editingFile.id, newFile, newPreviewUrl)}
+        />
+      )}
     </div>
   );
 };
