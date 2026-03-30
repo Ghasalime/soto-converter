@@ -1,0 +1,11 @@
+{
+    "name": "Soto WebP Converter (Pro)",
+    "slug": "soto-webp-converter",
+    "version": "2.1.0",
+    "download_url": "https://soto.web.id/updates/soto-webp-2.1.0.zip",
+    "sections": {
+        "description": "Plugin premium untuk konversi cerdas dari JPG/PNG ke WebP secara otomatis dengan Dashboard Statistik.",
+        "changelog": "<ul><li><b>Fitur Baru:</b> Pengecekan update otomatis dari dashboard.</li><li><b>Optimasi:</b> Peningkatan kecepatan konversi untuk file PNG besar.</li><li><b>Perbaikan:</b> Fix bug pada layout mobile di dashboard.</li></ul>"
+    },
+    "last_updated": "2026-03-30 17:35:00"
+}
