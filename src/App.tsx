@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { UploadCloud, Settings2, Download, RefreshCw, CheckCircle2, ChevronRight, Moon, Sun, X, Archive, Plus, ChevronDown, ShieldCheck, Zap, Menu, FileText, Lock, Scissors, Wand2, SlidersHorizontal } from 'lucide-react';
+import { UploadCloud, Settings2, Download, RefreshCw, CheckCircle2, ChevronRight, Moon, Sun, X, Archive, Plus, ChevronDown, ShieldCheck, Zap, Menu, FileText, Lock, Scissors, Wand2, SlidersHorizontal, Gift, Rocket } from 'lucide-react';
 import JSZip from 'jszip';
 import { jsPDF } from 'jspdf';
 import heic2any from 'heic2any';
@@ -104,6 +104,13 @@ const seoConfig = {
     h1: 'Convert HEIC/iPhone to PNG',
     subText: 'Satu-satunya konverter HEIC lokal tanpa unggah demi melindungi privasi Anda sepenuhnya 🛡️',
     defaultTarget: 'image/png' as ImageFormat
+  },
+  '/wordpress-plugin': {
+    title: 'Download Soto WebP Converter - LinkedIn Plugin WordPress Gratis',
+    desc: 'Plugin WordPress terbaik untuk optimasi gambar otomatis ke WebP. 100% Gratis, amankan privasi dengan pemrosesan Client-Side.',
+    h1: 'Plugin WordPress: Soto WebP',
+    subText: 'Optimalkan media WordPress Anda secepat kilat dengan format WebP murni dari browser.',
+    defaultTarget: 'image/webp' as ImageFormat
   }
 };
 
@@ -338,6 +345,9 @@ function TopNavigation({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
 
           <Link to="/privacy-policy" className={`nav-link ${path === '/privacy-policy' ? 'active' : ''}`}>Privasi</Link>
           <Link to="/terms-of-use" className={`nav-link ${path === '/terms-of-use' ? 'active' : ''}`}>Ketentuan</Link>
+          <Link to="/wordpress-plugin" className={`nav-link ${path === '/wordpress-plugin' ? 'active' : ''}`} style={{ color: 'var(--accent-color)', fontWeight: 700 }}>
+             <Gift size={16} /> Plugin WP
+          </Link>
         </div>
 
         <div className="right-controls">
@@ -369,6 +379,10 @@ function TopNavigation({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: 
         </div>
         <Link to="/privacy-policy" className="mobile-link">Privasi</Link>
         <Link to="/terms-of-use" className="mobile-link">Ketentuan</Link>
+        <Link to="/wordpress-plugin" className="mobile-link" style={{ background: 'var(--primary-gradient)', color: 'white' }}>
+            <span>Download Plugin WP</span>
+            <Gift size={20} />
+        </Link>
       </div>
     </>
   );
@@ -461,6 +475,83 @@ function TermsOfUse({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: () 
 
              <h2>5. Saluran Tanya Jawab & Kritik Elektronik</h2>
              <p>Apakah Anda memiliki pertanyaan lain atau menemukan celah kerentanan (Bug)? Silakan hantarkan tanggapan, masukan, gagasan, pelaporan, keluhan, fitur pesanan modifikasi, dan sapaan bersahabat lainnya melalui email satu pintu kami: <a href="mailto:gmail@ghasali.id"><b>gmail@ghasali.id</b></a>.</p>
+         </div>
+      </main>
+
+      <AppFooter />
+    </>
+  );
+}
+
+function WordPressPlugin({ theme, toggleTheme }: { theme: ThemeMode, toggleTheme: () => void }) {
+  return (
+    <>
+      <Helmet>
+        <title>Soto WebP Converter - Plugin WordPress Gratis & Cepat</title>
+        <meta name="description" content="Optimalkan gambar WordPress Anda secara otomatis menjadi WebP sebelum masuk ke Media Library. 100% Gratis, amankan privasi Anda." />
+      </Helmet>
+
+      <div className="bg-glow-1"></div>
+      <div className="bg-glow-2"></div>
+      
+      <TopNavigation theme={theme} toggleTheme={toggleTheme} />
+
+      <main className="app-main">
+         <header className="app-header animate-fade-in">
+           <div className="logo-container" style={{ marginBottom: 4, width: 80, height: 80 }}>
+             <Rocket size={40} className="text-accent" />
+           </div>
+           <h1>Soto WebP <span className="gradient-text">Plugin</span></h1>
+           <p>Optimalkan Website WordPress Anda dengan Sekali Klik.</p>
+           
+           <div className="layout-badges">
+             <span className="feature-badge"><div className="dot"></div> Auto WebP</span>
+             <span className="feature-badge"><div className="dot"></div> No Server Usage</span>
+             <span className="feature-badge"><div className="dot"></div> Client-Side Processing</span>
+           </div>
+         </header>
+
+         <div className="wp-feature-grid animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <ShieldCheck size={32} className="text-accent" />
+                </div>
+                <h3 style={{ fontSize: '1.25rem' }}>Bebas Privasi</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Gambar diproses murni di sisi browser (Client-Side) sebelum dikirim ke database WordPress Anda. Tidak ada data yang keluar ke server pihak ketiga.</p>
+            </div>
+
+            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <Zap size={32} className="text-accent" />
+                </div>
+                <h3 style={{ fontSize: '1.25rem' }}>Otomatis WebP</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Setiap kali Anda mengunggah gambar ke Media WordPress, plugin akan otomatis mengubahnya menjadi format WebP modern yang jauh lebih ringan.</p>
+            </div>
+
+            <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ background: 'var(--icon-bg)', width: '60px', height: '60px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                    <Gift size={32} className="text-accent" />
+                </div>
+                <h3 style={{ fontSize: '1.25rem' }}>100% Gratis Selamanya</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Nikmati fitur premium optimasi gambar tanpa biaya bulanan. Kami percaya pada keterbukaan dan performa web yang setara untuk semua.</p>
+            </div>
+         </div>
+
+         <div className="glass-panel animate-fade-in" style={{ padding: '48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', zIndex: 2 }}>
+                <h2 style={{ fontSize: '2rem', marginBottom: '16px' }}>Siap Mempercepat WordPress Anda?</h2>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', maxWidth: '600px', margin: '0 auto 32px' }}>Download plugin Soto WebP Converter sekarang dan rasakan perbedaan kecepatan loading situs Anda tanpa menguras bandwidth server.</p>
+                
+                <a href="/soto-webp-converter.zip" className="primary-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '16px 40px', fontSize: '1.1rem', borderRadius: '40px' }} download>
+                    <Download size={22} /> Download Plugin WordPress (.zip)
+                </a>
+                
+                <p style={{ marginTop: '20px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Versi Terbaru - Kompatibel dengan WordPress 6.0+ & PHP 7.4+</p>
+            </div>
+            
+            <div style={{ position: 'absolute', top: '-10%', right: '-5%', opacity: 0.05 }}>
+                <Rocket size={300} />
+            </div>
          </div>
       </main>
 
@@ -1088,6 +1179,7 @@ export default function App() {
     <Routes>
       <Route path="/privacy-policy" element={<PrivacyPolicy theme={theme} toggleTheme={toggleTheme}/>} />
       <Route path="/terms-of-use" element={<TermsOfUse theme={theme} toggleTheme={toggleTheme}/>} />
+      <Route path="/wordpress-plugin" element={<WordPressPlugin theme={theme} toggleTheme={toggleTheme}/>} />
       <Route path="*" element={<ConverterPage theme={theme} toggleTheme={toggleTheme}/>} />
     </Routes>
   );
