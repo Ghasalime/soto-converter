@@ -38,6 +38,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
   const isWebpToGif = currentPath === '/webp-to-gif';
   const isVectorizer = currentPath === '/image-to-svg';
   const isWatermarkTool = currentPath === '/image-watermark';
+  const isUpscaler = currentPath === '/image-upscaler';
+  const isEditor = currentPath === '/image-editor';
 
   const [files, setFiles] = useState<FileItem[]>([]);
   const [globalStatus, setGlobalStatus] = useState<GlobalStatus>('idle');
@@ -48,6 +50,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
   const [resizeWidth, setResizeWidth] = useState('');
   const [resizeHeight, setResizeHeight] = useState('');
   const [watermarkText, setWatermarkText] = useState(isWatermarkTool ? 'Soto Converter' : '');
+  const [upscaleFactor, setUpscaleFactor] = useState(2);
   const [customPrefix, setCustomPrefix] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -129,7 +132,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
           quality,
           resizeWidth,
           resizeHeight,
-          watermarkText: watermarkText || undefined
+          watermarkText: watermarkText || undefined,
+          upscaleFactor: isUpscaler ? upscaleFactor : undefined
         });
 
         updatedFiles[i] = {
@@ -240,7 +244,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
                 <UploadCloud size={40} className="upload-icon" />
               </div>
               <h3>
-                {isPdfToImage ? 'Pilih atau Seret File PDF' : 'Seret & Lepas Gambar'}
+                {isPdfToImage ? 'Pilih atau Seret File PDF' : 
+                 isEditor ? 'Unggah Gambar untuk Diedit' : 'Seret & Lepas Gambar'}
               </h3>
               <p>Bersifat batch (bisa banyak sekaligus) & 100% Client-side</p>
             </div>
@@ -275,7 +280,7 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
               <SlidersHorizontal size={20} className="text-accent" /> Control Panel
             </h4>
             
-            {!isVectorizer && !isWebpToGif && (
+            {!isVectorizer && !isWebpToGif && !isUpscaler && (
               <div className="input-group">
                 <label>Format Output</label>
                 <div className="custom-select">
@@ -287,6 +292,21 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
                     <option value="image/png">PNG (Lossless)</option>
                     <option value="image/jpeg">JPG (Kualitas Foto)</option>
                     <option value="image/avif">AVIF (Next-Gen)</option>
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {isUpscaler && (
+              <div className="input-group">
+                <label>Enhancement Factor</label>
+                <div className="custom-select">
+                  <select 
+                    value={upscaleFactor} 
+                    onChange={(e) => setUpscaleFactor(parseInt(e.target.value))}
+                  >
+                    <option value="2">2x (Double Resolution)</option>
+                    <option value="4">4x (Ultra HD)</option>
                   </select>
                 </div>
               </div>
@@ -314,6 +334,8 @@ export const ConverterPage: React.FC<ConverterPageProps> = ({ theme: _theme, tog
                    isGifToWebp ? 'Convert GIF to WebP' :
                    isWebpToGif ? 'Convert WebP to GIF' :
                    isVectorizer ? 'Vectorize to SVG' :
+                   isUpscaler ? 'Enhance Image' :
+                   isEditor ? 'Proses Editor' :
                    isWatermarkTool ? 'Apply Watermark' : 'Convert Semua'}
                 </button>
               ) : globalStatus === 'processing' ? (

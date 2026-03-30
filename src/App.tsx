@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { RefreshCw, X } from 'lucide-react';
 import { ConverterPage } from './components/Converter/ConverterPage';
-import { PrivacyPolicy, TermsOfUse, WordPressPlugin } from './components/Pages/StaticPages';
+import { PrivacyPolicy, TermsOfUse, WordPressPlugin, ApiDocs } from './components/Pages/StaticPages';
 import { Header } from './components/Layout/Header';
 import { Footer } from './components/Layout/Footer';
 import './index.css';
@@ -110,6 +110,9 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="/terms-of-use" element={<TermsOfUse theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="/wordpress-plugin" element={<WordPressPlugin theme={theme} toggleTheme={toggleTheme}/>} />
+          <Route path="/api-docs" element={<ApiDocs theme={theme} toggleTheme={toggleTheme}/>} />
+          <Route path="/image-upscaler" element={<ConverterPage theme={theme} toggleTheme={toggleTheme}/>} />
+          <Route path="/image-editor" element={<ConverterPage theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="*" element={<ConverterPage theme={theme} toggleTheme={toggleTheme}/>} />
         </Routes>
       </main>

@@ -57,12 +57,12 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               </div>
             ))}
             
-            <Link to="/wordpress-plugin" className={`nav-link-premium wp-plugin-btn ${location.pathname === '/wordpress-plugin' ? 'active' : ''}`}>
-              <Rocket size={16} /> <span>WP Plugin</span>
-            </Link>
           </nav>
 
           <div className="right-controls-premium">
+            <Link to="/wordpress-plugin" className={`nav-link-premium wp-plugin-btn ${location.pathname === '/wordpress-plugin' ? 'active' : ''}`} style={{marginRight: 8}}>
+              <Rocket size={16} /> <span>WP Plugin</span>
+            </Link>
             <button className="theme-toggle-premium" onClick={toggleTheme} aria-label="Toggle Theme">
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>

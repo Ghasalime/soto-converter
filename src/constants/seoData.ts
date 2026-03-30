@@ -82,5 +82,15 @@ export const seoConfig: Record<string, { title: string; desc: string; defaultTar
     title: 'Batch Watermark Tool - Lindungi Karya Anda | Soto Converter',
     desc: 'Tambahkan label cap air atau watermark ke banyak gambar sekaligus dengan mudah.',
     defaultTarget: 'image/webp'
+  },
+  '/image-upscaler': {
+    title: 'AI Image Enhancer - Perbesar Gambar Tanpa Pecah | Soto Converter',
+    desc: 'Tingkatkan kualitas dan dimensi gambar Anda menggunakan teknologi AI lokal yang cepat dan tajam.',
+    defaultTarget: 'image/webp'
+  },
+  '/image-editor': {
+    title: 'Mini Studio - Edit Gambar Instan di Browser | Soto Converter',
+    desc: 'Potong, putar, dan berikan filter pada gambar Anda secara langsung tanpa perlu aplikasi tambahan.',
+    defaultTarget: 'image/png'
   }
 };

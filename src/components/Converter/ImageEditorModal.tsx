@@ -107,7 +107,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ item, onSave
         </div>
 
         <div className="editor-body">
-          <div className="crop-area">
+          <div className="crop-container">
             <ReactCrop
               crop={crop}
               onChange={(c) => setCrop(c)}
@@ -126,7 +126,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ item, onSave
             </ReactCrop>
           </div>
 
-          <div className="editor-sidebar-controls">
+          <div className="editor-controls">
             <div className="control-section">
                 <label className="section-label">Transformasi</label>
                 <div className="button-grid-small">
@@ -142,7 +142,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ item, onSave
                 </div>
             </div>
             
-            <div className="modal-footer-actions">
+            <div className="editor-footer">
                 <button className="secondary-btn" onClick={onClose}>Batal</button>
                 <button className="primary-btn" onClick={handleSave}>
                     <Check size={18} className="btn-icon" /> Simpan

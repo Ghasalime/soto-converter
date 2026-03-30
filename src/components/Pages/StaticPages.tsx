@@ -129,3 +129,99 @@ export const WordPressPlugin: React.FC<PageProps> = () => {
     </div>
   );
 };
+
+export const ApiDocs: React.FC<PageProps> = () => {
+  return (
+    <div className="static-page animate-fade-in" style={{maxWidth: 1100, margin: '60px auto', padding: '0 24px'}}>
+      <div style={{textAlign: 'center', marginBottom: 60}}>
+        <h1 style={{fontSize: '3.5rem', fontWeight: 900, marginBottom: 20, letterSpacing: '-0.02em'}}>Dokumentasi <span className="text-gradient">API</span></h1>
+        <p style={{fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: 800, margin: '0 auto', lineHeight: 1.7}}>
+          Pelajari bagaimana Soto Converter memproses ribuan file secara batch tanpa pernah menyentuh cloud. Universal Client-Side Processing untuk masa depan web yang privat.
+        </p>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 32, marginBottom: 60}}>
+        <div className="content-card" style={{background: 'var(--surface)', padding: '48px', borderRadius: 32, border: '1px solid var(--glass-border)', boxShadow: '0 20px 40px rgba(0,0,0,0.1)'}}>
+          <h2 style={{fontSize: '1.8rem', fontWeight: 800, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12}}>
+             <Zap color="var(--accent-color)" size={28} /> Arsitektur Engine
+          </h2>
+          <p style={{lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: 32}}>
+            Soto Converter menggunakan <strong>Web Workers API</strong> dan <strong>Offscreen Canvas</strong> untuk memindahkan beban pemrosesan berat dari main thread UI.
+          </p>
+          <div style={{display: 'grid', gap: 20}}>
+            <div style={{display: 'flex', gap: 16}}>
+              <div style={{minWidth: 40, height: 40, borderRadius: 12, background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <CheckCircle2 size={20} color="#10b981" />
+              </div>
+              <div>
+                <div style={{fontWeight: 700, fontSize: '1.05rem', marginBottom: 4}}>Local Sandbox</div>
+                <div style={{fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5}}>Data diproses di memori RAM terisolasi browser Anda.</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: 16}}>
+              <div style={{minWidth: 40, height: 40, borderRadius: 12, background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <CheckCircle2 size={20} color="#10b981" />
+              </div>
+              <div>
+                <div style={{fontWeight: 700, fontSize: '1.05rem', marginBottom: 4}}>Zero Latency</div>
+                <div style={{fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5}}>Tanpa delay jaringan, kecepatan murni perangkat Anda.</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: 16}}>
+              <div style={{minWidth: 40, height: 40, borderRadius: 12, background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <CheckCircle2 size={20} color="#10b981" />
+              </div>
+              <div>
+                <div style={{fontWeight: 700, fontSize: '1.05rem', marginBottom: 4}}>Batch Processing</div>
+                <div style={{fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5}}>Mendukung antrian paralel hingga 50 file sekaligus.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="content-card" style={{background: 'var(--surface)', padding: '48px', borderRadius: 32, border: '1px solid var(--glass-border)', boxShadow: '0 20px 40px rgba(0,0,0,0.1)'}}>
+          <h2 style={{fontSize: '1.8rem', fontWeight: 800, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12}}>
+             <Globe color="var(--accent-color)" size={28} /> Integrasi Lokal
+          </h2>
+          <p style={{lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: 24}}>
+            Logika pemrosesan kami (`converter.ts`) didesain modular sehingga dapat diintegrasikan ke dalam workflow pipeline gambar Anda secara lokal.
+          </p>
+          <div style={{background: '#0d1117', borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)'}}>
+            <div style={{background: 'rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', gap: 6, borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+              <div style={{width: 10, height: 10, borderRadius: '50%', background: '#ff5f56'}}></div>
+              <div style={{width: 10, height: 10, borderRadius: '50%', background: '#ffbd2e'}}></div>
+              <div style={{width: 10, height: 10, borderRadius: '50%', background: '#27c93f'}}></div>
+            </div>
+            <div style={{padding: '24px', fontFamily: '"Fira Code", "Source Code Pro", monospace', fontSize: '0.85rem', lineHeight: 1.6, overflowX: 'auto'}}>
+              <div style={{color: '#8b949e'}}>// Contoh Integrasi Worker</div>
+              <div style={{marginTop: 8}}>
+                <span style={{color: '#ff7b72'}}>import</span> {'{ '} 
+                <span style={{color: '#79c0ff'}}>processImage</span> {' } '} 
+                <span style={{color: '#ff7b72'}}>from</span> <span style={{color: '#a5d6ff'}}>'./engine'</span>;
+              </div>
+              <div style={{marginTop: 12}}>
+                <span style={{color: '#ff7b72'}}>const</span> <span style={{color: '#79c0ff'}}>result</span> = <span style={{color: '#ff7b72'}}>await</span> <span style={{color: '#d2a8ff'}}>processImage</span>(file, {'{'});
+              </div>
+              <div style={{marginLeft: 16}}>
+                <span style={{color: '#79c0ff'}}>format</span>: <span style={{color: '#a5d6ff'}}>"webp"</span>, 
+                <span style={{color: '#79c0ff'}}>quality</span>: <span style={{color: '#79c0ff'}}>0.8</span>
+              </div>
+              <div>{'}'});</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{background: 'var(--surface)', padding: '60px 40px', borderRadius: 40, textAlign: 'center', border: '1px solid var(--accent-color)', position: 'relative', overflow: 'hidden'}}>
+        <div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'radial-gradient(circle at center, rgba(var(--accent-rgb), 0.05) 0%, transparent 70%)', pointerEvents: 'none'}}></div>
+        <h3 style={{fontSize: '2rem', fontWeight: 800, marginBottom: 16, position: 'relative', color: 'var(--text-primary)'}}>Butuh SDK atau API Khusus?</h3>
+        <p style={{color: 'var(--text-secondary)', marginBottom: 32, fontSize: '1.1rem', position: 'relative'}}>Kami sedang mengembangkan versi CLI dan NPM package untuk otomatisasi tingkat lanjut.</p>
+        <div style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
+          <a href="mailto:dev@sotoconverter.id" className="primary-btn" style={{padding: '16px 40px', borderRadius: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 280, fontWeight: 700, fontSize: '1.1rem', boxShadow: '0 10px 20px rgba(var(--accent-rgb), 0.2)', textDecoration: 'none'}}>
+            Hubungi Pengembang
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Lock, CheckCircle } from 'lucide-react';
+import { Shield, Lock, CheckCircle, Globe } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -27,8 +27,8 @@ export const Footer: React.FC = () => {
               <span>Github</span>
             </a>
             <a href="https://ghasali.id" target="_blank" rel="noopener noreferrer" className="social-pill">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M11.976 0C5.362 0 0 5.362 0 11.976c0 6.613 5.362 11.975 11.976 11.975 6.613 0 11.975-5.362 11.975-11.975C23.951 5.362 18.59 0 11.976 0zM1.23 11.976C1.23 6.04 6.04 1.23 11.976 1.23c1.332 0 2.59.244 3.754.689l-4.102 11.234-2.614-7.143c.488-.023.94-.047 1.341-.047 1.042 0 1.83.214 1.83.916 0 .548-.488 1.154-1.21 1.154-.345 0-.583-.178-.962-.178-.345 0-.547.167-.547.452 0 .19.167.381.333.642l1.63 4.45L8.528 7.37c1.38-.131 2.3-.238 2.3-.773 0-.488-.345-.714-.856-.714-.714 0-1.154.214-1.392.214-.238 0-.452-.214-.452-.452 0-.25.19-.535.535-.761C9.695 4.544 10.742 4.45 11.753 4.45c.987 0 1.95.143 2.76.642.548.333.88.857.88 1.547 0 .809-.5 1.594-1.237 2.45l-.476.535 3.332 9.091c1.237-1.927 1.96-4.212 1.96-6.739 0-.809-.107-1.594-.286-2.356L15.358 22.01c-1.07.452-2.213.702-3.382.702-5.937 0-10.746-4.81-10.746-10.746z"/></svg>
-              <span>WordPress</span>
+              <Globe size={16} />
+              <span>Developer</span>
             </a>
           </div>
         </div>
@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
           <h4>Dukungan</h4>
           <div className="footer-links-premium">
             <a href="mailto:support@sotoconverter.id">Email Helpdesk</a>
-            <a href="#">Dokumentasi API</a>
+            <Link to="/api-docs">Dokumentasi API</Link>
           </div>
         </div>
       </div>
