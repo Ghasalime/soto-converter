@@ -81,6 +81,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  position: relative;
 }
 
 #root {
@@ -407,10 +409,10 @@ button {
   max-width: 1100px; /* Slight expansion for breathing room */
   width: 100%;
   margin: 0 auto;
-  padding: 60px 20px 80px;
+  padding: clamp(20px, 5vw, 60px) 16px 80px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: clamp(24px, 5vw, 40px);
   flex: 1;
 }
 
@@ -590,48 +592,59 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0 4px;
+  gap: 12px;
+}
+
+@media (max-width: 540px) {
+  .list-header {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 12px;
+  }
 }
 .clear-btn {
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-}
-.clear-btn:hover {
-  background: #ef4444;
-  color: white;
-}
-
-.file-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.file-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 20px;
-  background: var(--surface);
-  border: 1px solid var(--glass-border);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.1);
+  padding: 8px 18px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
   transition: all var(--transition-fast);
 }
 
-@media (min-width: 640px) {
-  .file-card {
-    gap: 16px;
-    padding: 16px;
+@media (max-width: 540px) {
+  .clear-btn {
+     width: 100%;
+     text-align: center;
   }
 }
 
+.clear-btn:hover {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 3vw, 16px);
+  padding: clamp(10px, 3vw, 16px);
+  border-radius: 24px;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  transition: all var(--transition-fast);
+  width: 100%;
+  min-width: 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02), var(--shadow-inner);
+}
+
 .file-card:hover {
-  transform: translateX(4px);
+  transform: translateY(-2px);
   border-color: var(--accent-color);
   background: var(--surface-hover);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
 }
 .file-card.processing {
   border-color: rgba(59, 130, 246, 0.5);
@@ -646,6 +659,7 @@ button {
   flex-direction: column;
   overflow: hidden;
   flex: 1;
+  min-width: 0; /* Ensures the details can shrink for ellipsis */
 }
 .mini-preview {
   width: 54px;
@@ -662,6 +676,7 @@ button {
   text-overflow: ellipsis;
   color: var(--text-primary);
   font-size: clamp(0.9rem, 2.5vw, 1rem);
+  width: 100%;
 }
 .filesize-info {
   display: flex;
