@@ -5,6 +5,8 @@ import { useRegisterSW } from 'virtual:pwa-register/react';
 import { RefreshCw, X } from 'lucide-react';
 import { ConverterPage } from './components/Converter/ConverterPage';
 import { PrivacyPolicy, TermsOfUse, WordPressPlugin } from './components/Pages/StaticPages';
+import { Header } from './components/Layout/Header';
+import { Footer } from './components/Layout/Footer';
 import './index.css';
 
 type ThemeMode = 'light' | 'dark';
@@ -79,7 +81,11 @@ export default function App() {
     const savedTheme = localStorage.getItem('sotoweb-theme') as ThemeMode | null;
     if (savedTheme) {
       setTheme(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
     }
   }, []);
 
@@ -96,15 +102,19 @@ export default function App() {
 
   return (
     <HelmetProvider>
-      <div className="app-shell">
+      <div className="bg-glow-1"></div>
+      <div className="bg-glow-2"></div>
+      <Header theme={theme} toggleTheme={toggleTheme} />
+      <main className="app-main">
         <Routes>
           <Route path="/privacy-policy" element={<PrivacyPolicy theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="/terms-of-use" element={<TermsOfUse theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="/wordpress-plugin" element={<WordPressPlugin theme={theme} toggleTheme={toggleTheme}/>} />
           <Route path="*" element={<ConverterPage theme={theme} toggleTheme={toggleTheme}/>} />
         </Routes>
-        <ReloadPrompt />
-      </div>
+      </main>
+      <Footer />
+      <ReloadPrompt />
     </HelmetProvider>
   );
 }
