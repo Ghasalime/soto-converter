@@ -91,7 +91,7 @@ export const WordPressPlugin: React.FC<PageProps> = () => {
              <a href="https://github.com/Ghasalime/soto-converter/raw/main/public/soto-webp-converter.zip" download className="primary-btn" style={{padding: 'clamp(14px, 4vw, 18px) clamp(20px, 5vw, 40px)', fontSize: 'clamp(1rem, 3vw, 1.1rem)', borderRadius: '16px', boxShadow: '0 20px 40px var(--accent-glow)', flex: '1 1 auto', maxWidth: '350px'}}>
                 <Download size={20} style={{marginRight: 8}} /> Download v2.1.0 Free
              </a>
-             <Link to="/" className="secondary-btn" style={{padding: 'clamp(14px, 4vw, 18px) clamp(20px, 5vw, 40px)', fontSize: 'clamp(1rem, 3vw, 1.1rem)', borderRadius: '16px', flex: '1 1 auto', maxWidth: '350px'}}>
+             <Link to="/api-docs" className="secondary-btn" style={{padding: 'clamp(14px, 4vw, 18px) clamp(20px, 5vw, 40px)', fontSize: 'clamp(1rem, 3vw, 1.1rem)', borderRadius: '16px', flex: '1 1 auto', maxWidth: '350px'}}>
                 Pelajari Dokumentasi
              </Link>
           </div>

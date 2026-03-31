@@ -7,6 +7,7 @@ import { ConverterPage } from './components/Converter/ConverterPage';
 import { PrivacyPolicy, TermsOfUse, WordPressPlugin, ApiDocs } from './components/Pages/StaticPages';
 import { Header } from './components/Layout/Header';
 import { Footer } from './components/Layout/Footer';
+import ScrollToTop from './components/Utils/ScrollToTop';
 import './index.css';
 
 type ThemeMode = 'light' | 'dark';
@@ -102,6 +103,7 @@ export default function App() {
 
   return (
     <HelmetProvider>
+      <ScrollToTop />
       <div className="bg-glow-1"></div>
       <div className="bg-glow-2"></div>
       <Header theme={theme} toggleTheme={toggleTheme} />
