@@ -1332,6 +1332,12 @@ button {
   box-shadow: 0 8px 20px var(--accent-glow);
 }
 
+@media (max-width: 600px) {
+  .right-controls-premium .wp-plugin-btn {
+    display: none;
+  }
+}
+
 /* Dropdown Premium */
 .nav-item-dropdown-premium {
   position: relative;
