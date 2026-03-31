@@ -502,22 +502,32 @@ button {
   font-weight: 800;
 }
 
-/* Dropzone */
+/* Dropzone Premium UI */
 .dropzone {
-  border: 2px dashed var(--border-dashed);
-  padding: clamp(40px, 10vw, 70px) clamp(20px, 5vw, 40px);
+  border: 2px dashed rgba(59, 130, 246, 0.4);
+  padding: clamp(50px, 10vw, 90px) clamp(20px, 5vw, 40px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 16px;
+  gap: 20px;
   cursor: pointer;
-  transition: all var(--transition-smooth);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  border-radius: var(--border-radius);
+  border-radius: 36px;
   background: var(--surface);
+  box-shadow: var(--shadow-card), inset 0 0 0 1px var(--glass-highlight);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.dropzone::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .dropzone-content {
@@ -526,6 +536,8 @@ button {
   align-items: center;
   justify-content: center;
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 .dropzone.mini {
   padding: 24px;
@@ -533,49 +545,55 @@ button {
   height: auto;
   gap: 12px;
   border-width: 1px;
+  border-radius: 20px;
 }
 .dropzone:hover, .dropzone.dragging {
   border-color: var(--accent-color);
-  background: var(--icon-bg);
-  box-shadow: var(--shadow-glow);
+  background: var(--surface-hover);
+  box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.2), inset 0 0 0 1px var(--accent-color);
+  transform: translateY(-4px);
 }
 .icon-pulse-container {
-  width: clamp(60px, 15vw, 90px);
-  height: clamp(60px, 15vw, 90px);
+  width: clamp(70px, 15vw, 110px);
+  height: clamp(70px, 15vw, 110px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface-hover);
-  border: 1px solid var(--glass-border);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 50%;
-  margin: 0 auto 8px;
-  transition: var(--transition-smooth);
-  box-shadow: var(--shadow-card), var(--shadow-inner);
+  margin: 0 auto 12px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
 }
 .dropzone:hover .icon-pulse-container {
   background: var(--primary-gradient);
-  color: white;
-  box-shadow: var(--shadow-glow);
-  transform: scale(1.1);
+  border-color: transparent;
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+  transform: scale(1.15) translateY(-5px);
 }
 .upload-icon {
   color: var(--accent-color);
-  transition: color var(--transition-fast);
+  transition: all 0.4s ease;
+  width: clamp(32px, 8vw, 48px);
+  height: clamp(32px, 8vw, 48px);
 }
 .dropzone:hover .upload-icon {
   color: white;
 }
 .upload-icon-mini {
-  color: var(--text-secondary);
+  color: var(--accent-color);
 }
 .dropzone h3 {
-  font-size: clamp(1.2rem, 4vw, 1.5rem);
-  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-weight: 850;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 .dropzone p {
   color: var(--text-secondary);
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  font-weight: 500;
 }
 
 /* Dashboard Grid (Multiple files) */
@@ -637,29 +655,36 @@ button {
 .file-card {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 3vw, 16px);
-  padding: clamp(10px, 3vw, 16px);
-  border-radius: 24px;
+  gap: clamp(16px, 3vw, 24px);
+  padding: clamp(16px, 3vw, 20px);
+  border-radius: 28px;
   background: var(--surface);
   border: 1px solid var(--glass-border);
-  transition: all var(--transition-fast);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   min-width: 0;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.02), var(--shadow-inner);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02), inset 0 0 0 1px var(--glass-highlight);
 }
 
 .file-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent-color);
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(59, 130, 246, 0.4);
   background: var(--surface-hover);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+  box-shadow: 0 15px 35px -10px rgba(59, 130, 246, 0.15), inset 0 0 0 1px var(--glass-highlight);
 }
 .file-card.processing {
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
+  animation: pulseLight 2s infinite ease-in-out;
+}
+@keyframes pulseLight {
+  0% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); }
+  50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.3); }
+  100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); }
 }
 .file-card.success {
-  border-color: rgba(16, 185, 129, 0.4);
+  border-color: rgba(16, 185, 129, 0.6);
+  background: rgba(16, 185, 129, 0.03);
 }
 
 .file-details {
@@ -670,12 +695,13 @@ button {
   min-width: 0; /* Ensures the details can shrink for ellipsis */
 }
 .mini-preview {
-  width: 54px;
-  height: 54px;
+  width: 68px;
+  height: 68px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 16px;
   background: var(--input-bg);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid var(--glass-border);
 }
 .filename {
   font-weight: 600;
@@ -705,40 +731,47 @@ button {
 .file-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 .icon-btn {
   background: var(--input-bg);
   color: var(--text-secondary);
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--glass-border);
 }
 .icon-btn:hover {
   background: var(--surface-hover);
-  color: var(--text-primary);
+  color: var(--accent-color);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 .icon-btn.remove-single:hover {
   background: #fef2f2;
   color: #ef4444; 
-  border-color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
 }
 [data-theme='dark'] .icon-btn.remove-single:hover {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.1);
 }
 .icon-btn.download-single {
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.05);
   color: #10b981;
+  border-color: rgba(16, 185, 129, 0.2);
 }
 .icon-btn.download-single:hover {
   background: #10b981;
   color: white;
-  transform: translateY(-2px);
+  transform: scale(1.1);
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  border-color: transparent;
 }
 
 /* Controls */
@@ -752,24 +785,40 @@ button {
   top: 120px;
 }
 .control-group {
-  padding: 30px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
   background: var(--surface);
   border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  box-shadow: var(--shadow-card), inset 0 0 0 1px var(--glass-highlight);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  position: relative;
+  overflow: hidden;
+}
+.control-group::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  opacity: 0.8;
 }
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  position: relative;
 }
 .input-group label {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text-primary);
   display: flex;
   justify-content: space-between;
+  letter-spacing: -0.01em;
 }
 
 /* Custom Select Elements */
@@ -781,20 +830,22 @@ button {
   width: 100%;
   appearance: none;
   background: var(--bg-dark);
-  border: 1px solid var(--glass-border);
+  border: 2px solid rgba(59, 130, 246, 0.1);
   color: var(--text-primary);
   padding: 16px 20px;
-  border-radius: 14px;
-  font-size: 1.05rem;
-  font-weight: 500;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
   font-family: inherit;
   outline: none;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
-.custom-select select:focus {
+.custom-select select:focus, .custom-select select:hover {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+  background: var(--surface-hover);
 }
 .custom-select .select-icon {
   position: absolute;
@@ -882,19 +933,21 @@ button {
 .primary-btn {
   background: var(--primary-gradient);
   color: white;
-  padding: clamp(14px, 4vw, 18px) 32px;
-  font-size: clamp(1rem, 3vw, 1.15rem);
-  font-weight: 700;
-  border-radius: 18px;
+  padding: clamp(16px, 4vw, 20px) 36px;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  font-weight: 800;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-glow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25), inset 0 2px 4px rgba(255,255,255,0.2);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.02em;
 }
 
 .primary-btn::after {
@@ -908,12 +961,12 @@ button {
     45deg,
     transparent 0%,
     rgba(255, 255, 255, 0.1) 45%,
-    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.3) 50%,
     rgba(255, 255, 255, 0.1) 55%,
     transparent 100%
   );
   transform: rotate(-45deg);
-  transition: transform 0.6s ease;
+  transition: transform 0.8s ease;
 }
 
 .primary-btn:hover::after {
@@ -922,8 +975,8 @@ button {
 
 .primary-btn:hover {
   background: var(--primary-gradient-hover);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.35);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.45), inset 0 2px 4px rgba(255,255,255,0.3);
 }
 
 .primary-btn:active {
