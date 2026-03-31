@@ -217,7 +217,7 @@ export const ApiDocs: React.FC<PageProps> = () => {
         <h3 style={{fontSize: '2rem', fontWeight: 800, marginBottom: 16, position: 'relative', color: 'var(--text-primary)'}}>Butuh SDK atau API Khusus?</h3>
         <p style={{color: 'var(--text-secondary)', marginBottom: 32, fontSize: '1.1rem', position: 'relative'}}>Kami sedang mengembangkan versi CLI dan NPM package untuk otomatisasi tingkat lanjut.</p>
         <div style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
-          <a href="mailto:dev@sotoconverter.id" className="primary-btn" style={{padding: '16px 40px', borderRadius: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 280, fontWeight: 700, fontSize: '1.1rem', boxShadow: '0 10px 20px rgba(var(--accent-rgb), 0.2)', textDecoration: 'none'}}>
+          <a href="mailto:gmail@ghasali.id" className="primary-btn" style={{padding: '16px 40px', borderRadius: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 280, fontWeight: 700, fontSize: '1.1rem', boxShadow: '0 10px 20px rgba(var(--accent-rgb), 0.2)', textDecoration: 'none'}}>
             Hubungi Pengembang
           </a>
         </div>
