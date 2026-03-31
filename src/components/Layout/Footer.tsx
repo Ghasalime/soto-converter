@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
         <div className="footer-col">
           <h4>Dukungan</h4>
           <div className="footer-links-premium">
-            <a href="mailto:gmail@ghasali.id">gmail@ghasali.id</a>
+            <a href="mailto:gmail@ghasali.id">Email Helpdesk</a>
             <Link to="/api-docs">Dokumentasi API</Link>
           </div>
         </div>
