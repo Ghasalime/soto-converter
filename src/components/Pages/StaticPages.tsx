@@ -88,7 +88,7 @@ export const WordPressPlugin: React.FC<PageProps> = () => {
             Soto WebP Converter adalah solusi otomatis untuk mempercepat situs web Anda. Ubah setiap unggahan menjadi format WebP modern secara instan dan hemat penyimpanan hingga 80%.
           </p>
           <div style={{marginTop: 48, display: 'flex', justifyContent: 'center', gap: 20, flexWrap: 'wrap'}}>
-             <a href="/soto-webp-converter.zip" download className="primary-btn" style={{padding: '18px 44px', fontSize: '1.1rem', borderRadius: '16px', boxShadow: '0 20px 40px var(--accent-glow)'}}>
+             <a href="https://github.com/Ghasalime/soto-converter/raw/main/public/soto-webp-converter.zip" download className="primary-btn" style={{padding: '18px 44px', fontSize: '1.1rem', borderRadius: '16px', boxShadow: '0 20px 40px var(--accent-glow)'}}>
                 <Download size={22} style={{marginRight: 10}} /> Download v2.1.0 Free
              </a>
              <Link to="/" className="secondary-btn" style={{padding: '18px 44px', fontSize: '1.1rem', borderRadius: '16px'}}>
@@ -122,7 +122,7 @@ export const WordPressPlugin: React.FC<PageProps> = () => {
        <div style={{background: 'var(--primary-gradient)', padding: '60px 40px', borderRadius: 40, textAlign: 'center', color: 'white', marginBottom: 80}}>
           <h2 style={{fontSize: '2.2rem', fontWeight: 850, marginBottom: 16}}>Siap Meluncurkan Situs Tercepat Anda?</h2>
           <p style={{fontSize: '1.1rem', opacity: 0.9, marginBottom: 32, maxWidth: 600, margin: '0 auto 32px'}}>Bergabunglah dengan ribuan pemilik situs yang telah beralih ke optimasi gambar otomatis.</p>
-          <a href="/soto-webp-converter.zip" download className="white-btn" style={{background: 'white', color: 'black', padding: '16px 40px', borderRadius: '14px', fontWeight: 750, textDecoration: 'none', display: 'inline-block'}}>
+          <a href="https://github.com/Ghasalime/soto-converter/raw/main/public/soto-webp-converter.zip" download className="white-btn" style={{background: 'white', color: 'black', padding: '16px 40px', borderRadius: '14px', fontWeight: 750, textDecoration: 'none', display: 'inline-block'}}>
             Get Started Now
           </a>
        </div>
